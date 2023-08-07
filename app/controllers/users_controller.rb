@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update]
-  before_action :set_q, only: [:index, :search]
 
   def show
     @user = User.find(params[:id])
@@ -25,15 +24,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def search
-    @results = @q.result
-  end
-
   private
-
-  def set_q
-    @q = User.ransack(params[:q])
-  end
   
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
